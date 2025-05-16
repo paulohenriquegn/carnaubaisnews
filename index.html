@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carnaubais News</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-  <!-- Cabeçalho -->
+  <!-- Header -->
   <header class="bg-green-900 text-white py-4 shadow">
     <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
       <h1 class="text-3xl font-bold">Carnaubais News</h1>
@@ -25,30 +25,38 @@
   </header>
 
   <!-- Conteúdo principal -->
-  <main class="container mx-auto px-4 py-10">
+  <main class="container mx-auto px-4 py-10 space-y-12">
+    <!-- Destaque do Dia -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4 text-green-800">Destaque do Dia</h2>
+      <article class="bg-white p-6 rounded shadow">
+        <img src="https://source.unsplash.com/800x400/?news" alt="Destaque" class="w-full h-64 object-cover rounded mb-4">
+        <h3 class="text-2xl font-bold mb-2">Projeto de saúde reforça atenção básica nos Carnaubais</h3>
+        <p class="text-sm text-gray-500 mb-2">Publicado em 16/05/2025</p>
+        <p class="text-sm">Um novo programa estadual fortalece os serviços de saúde em municípios do interior piauiense, incluindo capacitação de agentes comunitários.</p>
+        <a href="#" class="inline-block mt-2 text-green-700 hover:underline font-semibold">Leia mais</a>
+      </article>
+    </section>
+
+    <!-- Outras Notícias -->
+    <section>
+      <h2 class="text-2xl font-bold mb-4 text-green-800">Mais Notícias</h2>
+      <div id="posts-container" class="grid md:grid-cols-2 gap-6"></div>
+    </section>
+
     <!-- GIRO NEWS -->
-    <section class="mb-12">
+    <section>
       <h2 class="text-2xl font-bold mb-4 text-green-800">GIRO NEWS</h2>
       <div id="giro-news-loading" class="text-center text-sm text-gray-500">Carregando notícias...</div>
       <div id="giro-news" class="grid md:grid-cols-3 gap-6 hidden"></div>
     </section>
 
-    <!-- Seção de Vídeos -->
-    <section class="mb-12">
+    <!-- Vídeos -->
+    <section>
       <h2 class="text-2xl font-bold mb-4 text-green-800">Vídeos em Destaque</h2>
       <div class="grid md:grid-cols-2 gap-6">
         <iframe class="w-full h-64 rounded" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         <iframe class="w-full h-64 rounded" src="https://www.youtube.com/embed/3tmd-ClpJxA" allowfullscreen></iframe>
-      </div>
-    </section>
-
-    <!-- Patrocinadores -->
-    <section>
-      <h2 class="text-2xl font-bold mb-4 text-green-800">Patrocinadores</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <img src="https://via.placeholder.com/300x100?text=Patrocinador+1" alt="Patrocinador 1" class="w-full rounded shadow">
-        <img src="https://via.placeholder.com/300x100?text=Patrocinador+2" alt="Patrocinador 2" class="w-full rounded shadow">
-        <img src="https://via.placeholder.com/300x100?text=Patrocinador+3" alt="Patrocinador 3" class="w-full rounded shadow">
       </div>
     </section>
   </main>
@@ -60,36 +68,69 @@
     </div>
   </footer>
 
-  <!-- Script GIRO NEWS -->
+  <!-- Scripts -->
   <script>
-    const API_KEY = 'SUA_API_KEY'; // Substitua pela sua chave do gnews.io
+    const posts = [
+      {
+        titulo: "Região dos Carnaubais inicia campanha contra dengue",
+        imagem: "https://source.unsplash.com/600x300/?healthcare",
+        data: "07/05/2025",
+        resumo: "Agentes de saúde percorrem bairros para conscientizar moradores e eliminar focos do mosquito transmissor.",
+        link: "#"
+      },
+      {
+        titulo: "Postos registram aumento na vacinação infantil",
+        imagem: "https://source.unsplash.com/600x300/?vaccine",
+        data: "05/05/2025",
+        resumo: "Campanhas educativas e ações itinerantes resultam em alta cobertura vacinal nas cidades da região.",
+        link: "#"
+      }
+    ];
+
+    const container = document.getElementById("posts-container");
+    posts.forEach(post => {
+      const article = document.createElement("article");
+      article.className = "bg-white p-4 rounded shadow";
+      article.innerHTML = `
+        <img src="${post.imagem}" alt="Imagem" class="mb-4 rounded">
+        <h3 class="text-xl font-bold mb-2">${post.titulo}</h3>
+        <p class="text-sm mb-2 text-gray-500">Publicado em ${post.data}</p>
+        <p class="text-sm">${post.resumo}</p>
+        <a href="${post.link}" class="inline-block mt-2 text-green-700 hover:underline font-semibold">Leia mais</a>
+      `;
+      container.appendChild(article);
+    });
+
+    const API_KEY = '96093bd4191ef957a4e3696a02159a8c'; // Substitua por sua chave real da GNews
     const URL = `https://gnews.io/api/v4/top-headlines?lang=pt&max=6&token=${API_KEY}`;
 
     fetch(URL)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
-        const loading = document.getElementById(\"giro-news-loading\");
-        const container = document.getElementById(\"giro-news\");
-        loading.style.display = \"none\";
-        container.classList.remove(\"hidden\");
+        const loading = document.getElementById("giro-news-loading");
+        const container = document.getElementById("giro-news");
+        loading.style.display = "none";
+        container.classList.remove("hidden");
 
         data.articles.forEach(article => {
-          const div = document.createElement(\"div\");
-          div.className = \"bg-white p-4 rounded shadow\";
+          const div = document.createElement("div");
+          div.className = "bg-white p-4 rounded shadow";
           div.innerHTML = `
-            <img src=\"${article.image || 'https://via.placeholder.com/600x300'}\" class=\"mb-2 rounded\">
-            <h3 class=\"text-lg font-bold mb-1\">${article.title}</h3>
-            <p class=\"text-sm text-gray-500 mb-2\">${new Date(article.publishedAt).toLocaleDateString()}</p>
-            <a href=\"${article.url}\" target=\"_blank\" class=\"text-green-700 hover:underline font-semibold\">Leia no site</a>
+            <img src="${article.image || 'https://via.placeholder.com/600x300'}" class="mb-2 rounded">
+            <h3 class="text-lg font-bold mb-1">${article.title}</h3>
+            <p class="text-sm text-gray-500 mb-2">${new Date(article.publishedAt).toLocaleDateString()}</p>
+            <a href="${article.url}" target="_blank" class="text-green-700 hover:underline font-semibold">Leia no site</a>
           `;
           container.appendChild(div);
         });
       })
       .catch(error => {
         console.error('Erro ao carregar Giro News:', error);
-        document.getElementById(\"giro-news-loading\").innerText = \"Não foi possível carregar as notícias no momento.\";
+        document.getElementById("giro-news-loading").innerText = "Não foi possível carregar as notícias no momento.";
       });
   </script>
+
 </body>
 </html>
+
 
