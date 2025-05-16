@@ -1,1 +1,90 @@
-<html><body><h1>Categoria: Cultura</h1></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cultura | Carnaubais News</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="bg-green-900 text-white py-4 shadow">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Carnaubais News</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="hover:underline">Início</a>
+        <a href="politica.html" class="hover:underline">Política</a>
+        <a href="policia.html" class="hover:underline">Polícia</a>
+        <a href="esportes.html" class="hover:underline">Esportes</a>
+        <a href="cultura.html" class="underline font-semibold">Cultura</a>
+        <a href="saude.html" class="hover:underline">Saúde</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-10">
+    <h2 class="text-3xl font-bold mb-6 text-green-800">Notícias de Cultura</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <article class="bg-white p-4 rounded shadow">
+        <img src="https://source.unsplash.com/600x300/?culture,festival" alt="Notícia Cultura" class="mb-4 rounded">
+        <h3 class="text-xl font-bold mb-2">Festival regional celebra tradições populares</h3>
+        <p class="text-sm mb-2 text-gray-500">Publicado em 08/05/2025</p>
+        <p class="text-sm">Moradores participam de apresentações artísticas e culinária típica, resgatando valores culturais da região.</p>
+        <a href="#" class="inline-block mt-2 text-green-700 hover:underline font-semibold">Leia mais</a>
+      </article>
+
+      <article class="bg-white p-4 rounded shadow">
+        <img src="https://source.unsplash.com/600x300/?folklore" alt="Notícia Cultura" class="mb-4 rounded">
+        <h3 class="text-xl font-bold mb-2">Oficina de arte e memória envolve jovens e idosos</h3>
+        <p class="text-sm mb-2 text-gray-500">Publicado em 06/05/2025</p>
+        <p class="text-sm">Projeto intergeracional incentiva a troca de saberes e o registro de histórias orais dos Carnaubais.</p>
+        <a href="#" class="inline-block mt-2 text-green-700 hover:underline font-semibold">Leia mais</a>
+      </article>
+    </div>
+
+    
+    <!-- GIRO NEWS automatizado -->
+    <section class="mt-16">
+      <h2 class="text-2xl font-bold mb-4 text-green-800">GIRO NEWS</h2>
+      <div id="giro-news-loading" class="text-center text-sm text-gray-500">Carregando notícias...</div>
+      <div id="giro-news" class="grid md:grid-cols-3 gap-6 hidden"></div>
+    </section>
+  </main>
+
+  <footer class="bg-green-900 text-white py-6 mt-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Carnaubais News - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  
+<script>
+  // Substitua SUA_API_KEY pela chave gerada no site gnews.io
+  const API_KEY = 'SUA_API_KEY';
+  const URL = `https://gnews.io/api/v4/top-headlines?lang=pt&max=6&token=${API_KEY}`;
+
+  fetch(URL)
+    .then(response => response.json())
+    .then(data => {
+      const loading = document.getElementById("giro-news-loading");
+      const container = document.getElementById("giro-news");
+      loading.style.display = "none";
+      container.classList.remove("hidden");
+
+      data.articles.forEach(article => {
+        const div = document.createElement("div");
+        div.className = "bg-white p-4 rounded shadow";
+        div.innerHTML = `
+          <img src="${article.image || 'https://via.placeholder.com/600x300'}" class="mb-2 rounded">
+          <h3 class="text-lg font-bold mb-1">${article.title}</h3>
+          <p class="text-sm text-gray-500 mb-2">${new Date(article.publishedAt).toLocaleDateString()}</p>
+          <a href="${article.url}" target="_blank" class="text-green-700 hover:underline font-semibold">Leia no site</a>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(error => {
+      console.error('Erro ao carregar Giro News:', error);
+    });
+</script>
+</body>
+</html>
