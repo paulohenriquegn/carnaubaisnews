@@ -32,9 +32,11 @@
       // Defina sua senha aqui
       const senhaCorreta = "carnaubais123";
 
-      if (senha === senhaCorreta) {
-        window.location.href = "admin.html";
-      } else {
+    if (senha === senhaCorreta) {
+  sessionStorage.setItem("autenticado", senhaCorreta);
+  window.location.href = "admin.html";
+}
+ else {
         document.getElementById("erro").classList.remove("hidden");
       }
     });
