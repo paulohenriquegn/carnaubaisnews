@@ -1,1 +1,76 @@
-<html><body><h1>Categoria: Saúde</h1></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carnaubais News</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-green-900 text-white py-4 shadow">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-3xl font-bold">Carnaubais News</h1>
+      <nav class="mt-2 md:mt-0 space-x-4 text-sm md:text-base">
+        <a href="index.html" class="hover:underline">Início</a>
+        <a href="politica.html" class="hover:underline">Política</a>
+        <a href="policia.html" class="hover:underline">Polícia</a>
+        <a href="esportes.html" class="hover:underline">Esportes</a>
+        <a href="cultura.html" class="hover:underline">Cultura</a>
+        <a href="saude.html" class="hover:underline">Saúde</a>
+        <a href="login.html" class="bg-white text-green-800 px-3 py-1 rounded shadow hover:bg-gray-100">Área do Editor</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Conteúdo da Categoria Dinâmica -->
+  <main class="container mx-auto px-4 py-10">
+    <h2 class="text-3xl font-bold mb-6 text-green-800">Notícias de Saúde</h2>
+    <div id="posts-container" class="grid md:grid-cols-2 gap-6">
+      <!-- Posts serão inseridos aqui dinamicamente -->
+    </div>
+  </main>
+
+  <footer class="bg-green-900 text-white py-6 mt-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Carnaubais News - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <script>
+    const posts = [
+      {
+        titulo: "Região dos Carnaubais inicia campanha contra dengue",
+        imagem: "https://source.unsplash.com/600x300/?healthcare",
+        data: "07/05/2025",
+        resumo: "Agentes de saúde percorrem bairros para conscientizar moradores e eliminar focos do mosquito transmissor.",
+        link: "#"
+      },
+      {
+        titulo: "Postos registram aumento na vacinação infantil",
+        imagem: "https://source.unsplash.com/600x300/?vaccine",
+        data: "05/05/2025",
+        resumo: "Campanhas educativas e ações itinerantes resultam em alta cobertura vacinal nas cidades da região.",
+        link: "#"
+      }
+    ];
+
+    const container = document.getElementById("posts-container");
+
+    posts.forEach(post => {
+      const article = document.createElement("article");
+      article.className = "bg-white p-4 rounded shadow";
+      article.innerHTML = `
+        <img src="${post.imagem}" alt="Imagem" class="mb-4 rounded">
+        <h3 class="text-xl font-bold mb-2">${post.titulo}</h3>
+        <p class="text-sm mb-2 text-gray-500">Publicado em ${post.data}</p>
+        <p class="text-sm">${post.resumo}</p>
+        <a href="${post.link}" class="inline-block mt-2 text-green-700 hover:underline font-semibold">Leia mais</a>
+      `;
+      container.appendChild(article);
+    });
+  </script>
+
+</body>
+</html>
