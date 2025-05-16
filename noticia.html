@@ -1,1 +1,64 @@
-<html><body><h1>Página de Notícia Individual</h1></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notícia | Carnaubais News</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Header -->
+  <header class="bg-green-900 text-white py-4 shadow">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Carnaubais News</h1>
+      <a href="index.html" class="underline">Voltar para a página inicial</a>
+    </div>
+  </header>
+
+  <!-- Página da Notícia -->
+  <main class="container mx-auto px-4 py-10 flex flex-col lg:flex-row gap-8">
+    <!-- Conteúdo da Notícia -->
+    <article class="flex-1 bg-white p-6 rounded shadow">
+      <h2 class="text-3xl font-bold mb-4">Projeto de saúde é lançado em cidades dos Carnaubais</h2>
+      <p class="text-sm text-gray-500 mb-2">Publicado em 16 de maio de 2025 | Por Redação Carnaubais News</p>
+      <img src="https://source.unsplash.com/900x400/?health,city" alt="Imagem da Notícia" class="w-full h-64 object-cover rounded mb-6">
+
+      <p class="mb-4">Um novo projeto voltado para a atenção básica à saúde foi lançado esta semana nas principais cidades da região dos Carnaubais, no Piauí. Com foco em melhorar o atendimento nos postos de saúde e capacitar os profissionais da área, o programa recebeu um investimento de R$ 2 milhões e deve beneficiar milhares de moradores.</p>
+
+      <p class="mb-4">A cerimônia de lançamento aconteceu na cidade de Campo Grande do Piauí, reunindo autoridades locais, profissionais da saúde e representantes da comunidade. Segundo a Secretaria de Saúde do Estado, a expectativa é que a primeira fase do projeto seja implementada até o final do semestre.</p>
+
+      <p class="mb-4">“É uma iniciativa histórica para a nossa região”, afirmou a enfermeira Camila Mendes, uma das responsáveis pela coordenação do projeto. “Vamos garantir mais qualidade, agilidade e humanização no atendimento.”</p>
+
+      <p class="mb-4">Além das melhorias físicas nas unidades de saúde, também será promovida uma série de ações educativas para conscientização da população sobre cuidados preventivos e direitos do paciente.</p>
+
+      <!-- Comentários -->
+      <section class="mt-10">
+        <h3 class="text-xl font-bold mb-4">Deixe seu comentário</h3>
+        <form class="space-y-4">
+          <input type="text" placeholder="Seu nome" class="w-full border border-gray-300 p-2 rounded">
+          <textarea placeholder="Seu comentário" class="w-full border border-gray-300 p-2 rounded h-32"></textarea>
+          <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Enviar</button>
+        </form>
+      </section>
+    </article>
+
+    <!-- Lateral com Patrocinadores -->
+    <aside class="w-full lg:w-1/4 space-y-6">
+      <div class="bg-white p-4 rounded shadow">
+        <h3 class="text-lg font-bold mb-2">Patrocinadores</h3>
+        <img src="https://via.placeholder.com/200x100?text=Patrocinador+1" alt="Patrocinador 1" class="mb-2 w-full">
+        <img src="https://via.placeholder.com/200x100?text=Patrocinador+2" alt="Patrocinador 2" class="w-full">
+      </div>
+    </aside>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-green-900 text-white py-6 mt-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Carnaubais News - Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+</body>
+</html>
