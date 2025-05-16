@@ -3,23 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Carnaubais News</title>
+  <title>Painel Administrativo | Carnaubais News</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    // Verificação de senha simples
+    const senhaCorreta = "carnaubais123";
+    const senhaInformada = sessionStorage.getItem("autenticado");
+    if (senhaInformada !== senhaCorreta) {
+      window.location.href = "login.html";
+    }
+  </script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded shadow w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-green-800 mb-6">Painel do Editor</h2>
-    <form action="admin.html" method="GET" class="space-y-4">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
-        <input type="email" id="email" name="email" required class="w-full border border-gray-300 p-2 rounded mt-1">
-      </div>
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-        <input type="password" id="password" name="password" required class="w-full border border-gray-300 p-2 rounded mt-1">
-      </div>
-      <button type="submit" class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800">Entrar</button>
-    </form>
-  </div>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-green-900 text-white py-4">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">Painel do Editor - Carnaubais News</h1>
+      <a href="login.html" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded" onclick="sessionStorage.removeItem('autenticado')">Sair</a>
+    </div>
+  </header>
+
+  <!-- Conteúdo do Painel -->
+  <main class="container mx-auto px-4 py-8">
+    <section class="bg-white p-6 rounded shadow mb-10">
+      <h2 class="text-2xl font-bold mb-4">Publicar Nova Notícia</h2>
+      <form class="space-y-4">
+        <input type="text" placeholder="Título da Notícia" class="w-full border border-gray-300 p-2 rounded">
+
+        <!-- Categoria -->
+        <div>
+          <label for="categoria" class="block text-sm font-medium text-gray-700 mb-1">Categoria:</label>
+          <select id="categoria" name="categoria" class="w-full border border-gray-300 p-2 rounded">
+            <option value="politica">Política</option>
+            <option value="policia">Polícia</option>
+            <option value="esportes">Esportes</option>
+            <option value="cultura">Cultura</option>
+            <option value="saude">Saúde</option>
+          </select>
+        </div>
+
+        <input type="url" placeholder="URL da Imagem (ex: Unsplash)" class="w-full border border-gray-300 p-2 rounded">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Ou envie uma imagem do seu dispositivo:</label>
+          <input type="file" accept="image/*" class="w-full border border-gray-300 p-2 rounded">
+        </div>
+        <textarea placeholder="Conteúdo da notícia" class="w-full border border-gray-300 p-2 rounded h-40"></textarea>
+        <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800">Publicar</button>
+      </form>
+    </section>
+
+    <section class="bg-white p-6 rounded shadow">
+      <h2 class="text-2xl font-bold mb-4">Notícias Recentes</h2>
+      <ul class="space-y-4">
+        <li class="border border-gray-200 p-4 rounded">
+          <h3 class="font-bold">Projeto de saúde é lançado em cidades dos Carnaubais</h3>
+          <p class="text-sm text-gray-500">Publicado em 16/05/2025 | Categoria: Saúde</p>
+        </li>
+        <li class="border border-gray-200 p-4 rounded">
+          <h3 class="font-bold">Festival cultural movimenta São João da Varjota</h3>
+          <p class="text-sm text-gray-500">Publicado em 15/05/2025 | Categoria: Cultura</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-green-900 text-white py-4 mt-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Carnaubais News - Painel Administrativo</p>
+    </div>
+  </footer>
+
 </body>
 </html>
