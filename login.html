@@ -9,7 +9,7 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
   <div class="bg-white p-8 rounded shadow w-full max-w-md">
     <h2 class="text-2xl font-bold text-center text-green-800 mb-6">Painel do Editor</h2>
-    <form action="admin.html" method="GET" class="space-y-4">
+    <form id="loginForm" class="space-y-4">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
         <input type="email" id="email" name="email" required class="w-full border border-gray-300 p-2 rounded mt-1">
@@ -20,6 +20,24 @@
       </div>
       <button type="submit" class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800">Entrar</button>
     </form>
+    <p id="erro" class="text-red-600 text-sm mt-4 text-center hidden">Senha incorreta</p>
   </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const senha = document.getElementById("password").value;
+      const email = document.getElementById("email").value;
+
+      // Defina sua senha aqui
+      const senhaCorreta = "carnaubais123";
+
+      if (senha === senhaCorreta) {
+        window.location.href = "admin.html";
+      } else {
+        document.getElementById("erro").classList.remove("hidden");
+      }
+    });
+  </script>
 </body>
 </html>
