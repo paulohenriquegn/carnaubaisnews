@@ -5,36 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel Administrativo | Carnaubais News</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script>
-    // Verificação de senha simples
-    const senhaCorreta = "carnaubais123";
-    const senhaInformada = sessionStorage.getItem("autenticado");
-    if (senhaInformada !== senhaCorreta) {
-      window.location.href = "login.html";
-    }
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZQfixBoR14yuPwwnNYRbH54rzSZ0DwQ4",
+      authDomain: "carnaubais-news.firebaseapp.com",
+      projectId: "carnaubais-news",
+      storageBucket: "carnaubais-news.appspot.com",
+      messagingSenderId: "",
+      appId: ""
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("form-publicar");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const titulo = form["titulo"].value;
+        const categoria = form["categoria"].value;
+        const imagem = form["imagem"].value;
+        const conteudo = form["conteudo"].value;
+
+        try {
+          await addDoc(collection(db, "noticias"), {
+            titulo,
+            categoria,
+            imagem,
+            conteudo,
+            data: serverTimestamp()
+          });
+
+          alert("Notícia publicada com sucesso!");
+          form.reset();
+        } catch (error) {
+          console.error("Erro ao publicar notícia:", error);
+        }
+      });
+
+      document.getElementById("btn-sair").addEventListener("click", () => {
+        signOut(auth);
+      });
+    });
   </script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-
-  <!-- Header -->
   <header class="bg-green-900 text-white py-4">
     <div class="container mx-auto px-4 flex justify-between items-center">
       <h1 class="text-xl font-bold">Painel do Editor - Carnaubais News</h1>
-      <a href="login.html" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded" onclick="sessionStorage.removeItem('autenticado')">Sair</a>
+      <button id="btn-sair" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded">Sair</button>
     </div>
   </header>
 
-  <!-- Conteúdo do Painel -->
   <main class="container mx-auto px-4 py-8">
     <section class="bg-white p-6 rounded shadow mb-10">
       <h2 class="text-2xl font-bold mb-4">Publicar Nova Notícia</h2>
-      <form class="space-y-4">
-        <input type="text" placeholder="Título da Notícia" class="w-full border border-gray-300 p-2 rounded">
+      <form id="form-publicar" class="space-y-4">
+        <input name="titulo" type="text" placeholder="Título da Notícia" class="w-full border border-gray-300 p-2 rounded" required>
 
-        <!-- Categoria -->
         <div>
           <label for="categoria" class="block text-sm font-medium text-gray-700 mb-1">Categoria:</label>
-          <select id="categoria" name="categoria" class="w-full border border-gray-300 p-2 rounded">
+          <select name="categoria" class="w-full border border-gray-300 p-2 rounded" required>
             <option value="politica">Política</option>
             <option value="policia">Polícia</option>
             <option value="esportes">Esportes</option>
@@ -43,37 +87,18 @@
           </select>
         </div>
 
-        <input type="url" placeholder="URL da Imagem (ex: Unsplash)" class="w-full border border-gray-300 p-2 rounded">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Ou envie uma imagem do seu dispositivo:</label>
-          <input type="file" accept="image/*" class="w-full border border-gray-300 p-2 rounded">
-        </div>
-        <textarea placeholder="Conteúdo da notícia" class="w-full border border-gray-300 p-2 rounded h-40"></textarea>
+        <input name="imagem" type="url" placeholder="URL da Imagem (ex: Unsplash)" class="w-full border border-gray-300 p-2 rounded">
+        <textarea name="conteudo" placeholder="Conteúdo da notícia" class="w-full border border-gray-300 p-2 rounded h-40" required></textarea>
         <button type="submit" class="bg-green-700 text-white px-6 py-2 rounded hover:bg-green-800">Publicar</button>
       </form>
     </section>
-
-    <section class="bg-white p-6 rounded shadow">
-      <h2 class="text-2xl font-bold mb-4">Notícias Recentes</h2>
-      <ul class="space-y-4">
-        <li class="border border-gray-200 p-4 rounded">
-          <h3 class="font-bold">Projeto de saúde é lançado em cidades dos Carnaubais</h3>
-          <p class="text-sm text-gray-500">Publicado em 16/05/2025 | Categoria: Saúde</p>
-        </li>
-        <li class="border border-gray-200 p-4 rounded">
-          <h3 class="font-bold">Festival cultural movimenta São João da Varjota</h3>
-          <p class="text-sm text-gray-500">Publicado em 15/05/2025 | Categoria: Cultura</p>
-        </li>
-      </ul>
-    </section>
   </main>
 
-  <!-- Rodapé -->
   <footer class="bg-green-900 text-white py-4 mt-10">
     <div class="container mx-auto px-4 text-center">
       <p>&copy; 2025 Carnaubais News - Painel Administrativo</p>
     </div>
   </footer>
-
 </body>
 </html>
+
